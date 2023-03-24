@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article".
@@ -23,7 +21,7 @@ use yii\db\ActiveRecord;
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
  */
-class Article extends ActiveRecord
+class Article extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -36,7 +34,7 @@ class Article extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             [['description', 'content'], 'string'],
@@ -49,7 +47,7 @@ class Article extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels(): array
+    public function attributeLabels()
     {
         return [
             'id' => 'ID',
@@ -68,9 +66,9 @@ class Article extends ActiveRecord
     /**
      * Gets query for [[ArticleTags]].
      *
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
-    public function getArticleTags(): ActiveQuery
+    public function getArticleTags()
     {
         return $this->hasMany(ArticleTag::class, ['article_id' => 'id']);
     }
@@ -78,9 +76,9 @@ class Article extends ActiveRecord
     /**
      * Gets query for [[Comments]].
      *
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
-    public function getComments(): ActiveQuery
+    public function getComments()
     {
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
