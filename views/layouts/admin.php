@@ -37,23 +37,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-//            ['label' => 'Главная', 'url' => ['/site/index']],
-            ['label' => 'В админку', 'url' => ['/admin/default/index']],
-            ['label' => 'О сайте', 'url' => ['/site/about']],
-            ['label' => 'Контакты', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Войти', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Выйти (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+  //          ['label' => 'Главная', 'url' => ['/admin/default/index']],
+            ['label' => 'Статьи', 'url' => ['/admin/article/index']],
+            ['label' => 'Комментарии', 'url' => ['/admin/comment/index']],
+            ['label' => 'Категории', 'url' => ['/admin/category/index']],
+            ['label' => 'Теги', 'url' => ['/admin/tag/index']],
+        ],
     ]);
     NavBar::end();
     ?>
