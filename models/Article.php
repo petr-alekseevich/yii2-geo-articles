@@ -63,6 +63,14 @@ class Article extends \yii\db\ActiveRecord
         ];
     }
 
+    public function saveArticle()
+    {
+        $this->user_id = Yii::$app->user->id;
+        $this->date = Yii::$app->formatter->asDate($this->date, 'php:Y-m-d');
+        $this->category_id = 1;
+        return $this->save(false);
+    }
+
     /**
      * Gets query for [[ArticleTags]].
      *

@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\models\Article;
 use app\models\ArticleSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,19 +70,15 @@ class ArticleController extends Controller
     {
         $model = new Article();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
+            $article = Article::findOne($model->id);
+            return $this->redirect(['update', 'id' => $article->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-
     /**
      * Updates an existing Article model.
      * If update is successful, the browser will be redirected to the 'view' page.
