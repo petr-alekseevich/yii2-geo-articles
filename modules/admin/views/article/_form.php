@@ -10,6 +10,8 @@ use dosamigos\ckeditor\CKEditorInline;
 /* @var $model app\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 
+$optionsCKEditor = Yii::$app->params['optionsCKEditor'];
+
 ?>
 
 
@@ -46,90 +48,17 @@ use dosamigos\ckeditor\CKEditorInline;
     <tr class="border-bot">
         <td>Содержание</td>
         <td>
-            <div id="CKEditorInline" class="d-none">
+            <div id="CKEditorInline">
                 <?= $form->field($model, 'content', [
                     'labelOptions' => [
                         'class' => 'font-weight-bold',
                     ]
-                ])->widget(CKEditor::class, [
-                    'kcfinder' => true,
-                    'kcfOptions' => [
-                        'uploadURL' => '@web/uploads/articleImage/' . $model->id . '/',
-                        'uploadDir' => '@webroot/uploads/articleImage/' . $model->id . '/',
-                        'access' => [  // @link http://kcfinder.sunhater.com/install#_access
-                            'files' => [
-                                'upload' => true,
-                                'delete' => true,
-                                'copy' => true,
-                                'move' => true,
-                                'rename' => true,
-                            ],
-                            'dirs' => [
-                                'create' => true,
-                                'delete' => true,
-                                'rename' => true,
-                            ],
-                        ],
-                        'types' => [  // @link http://kcfinder.sunhater.com/install#_types
-                            'files' => [
-                                'type' => '',
-                            ],
-                        ],
-                    ],
-                    'options' => ['rows' => 12],
-                    'preset' => 'basic',
-                    'clientOptions' => [
-                        'height' => 700,
-                        'extraPlugins' => 'justify,font,codesnippet,iframe',
-                        'language' => 'ru',
-                        'forcePasteAsPlainText' => true,
-                        'toolbarGroups' => [
-                            [
-                                'name' => 'clipboard',
-                                'groups' => ['clipboard', 'undo'],
-                            ],
-                            [
-                                'name' => 'editing',
-                                'groups' => ['find', 'selection', 'spellchecker'],
-                            ],
-                            [
-                                'name' => 'basicstyles',
-                                'groups' => ['basicstyles', 'cleanup'],
-                            ],
-                            [
-                                'name' => 'insert',
-                            ],
-                            [
-                                'name' => 'font',
-                                'groups' => [
-                                    'fontSize_sizes' => '8/8px;9/9px;10/10px;11/11px;12/12px;13/13px;14/14px;15/15px;16/16px;18/18px;20/20px;22/22px;24/24px;26/26px;28/28px;36/36px;48/48px;72/72px'
-                                ],
-                            ],
-                            [
-                                'name' => 'links',
-                            ],
-                            [
-                                'name' => 'document',
-                                'groups' => ['mode', 'document', 'doctools'],
-                            ],
-                            [
-                                'name' => 'paragraph',
-                                'groups' => ['list', 'indent', 'blocks', 'align', 'bidi'],
-                            ],
-                            [
-                                'name' => 'styles',
-                                'groups' => ['Styles', 'Format', 'Font', 'FontSize']
-                            ]
-                        ],
-                        'filebrowserUploadMethod' => 'form',
-                    ],
-                ])->label(false);
+                ])->widget(CKEditor::class, $optionsCKEditor)->label(false);
                 ?>
                 <span style="color: grey">Подсказка: Для перехода на новую строку без отступа используйте сочетание клавиш Shift+Enter</span>
             </div>
         </td>
     </tr>
-
 
     <tr>
         <td>Дата</td>

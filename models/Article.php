@@ -17,7 +17,7 @@ use Yii;
  * @property int|null $user_id Пользователь
  * @property int|null $status Опубликован
  * @property int|null $category_id Категория
- *
+ * @property string|null $video
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
  */
@@ -37,7 +37,7 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'content'], 'string'],
+            [['description', 'content', 'video'], 'string'],
             [['date'], 'safe'],
             [['viewed', 'user_id', 'status', 'category_id'], 'integer'],
             [['title', 'image'], 'string', 'max' => 255],
@@ -60,6 +60,7 @@ class Article extends \yii\db\ActiveRecord
             'user_id' => 'Пользователь',
             'status' => 'Опубликован',
             'category_id' => 'Категория',
+            'video' => 'Видео',
         ];
     }
 
