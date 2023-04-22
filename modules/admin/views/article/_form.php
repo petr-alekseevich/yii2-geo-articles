@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\ckeditor\CKEditorInline;
 

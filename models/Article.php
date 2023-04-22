@@ -37,6 +37,7 @@ class Article extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['title'], 'required'],
             [['description', 'content', 'video'], 'string'],
             [['date'], 'safe'],
             [['viewed', 'user_id', 'status', 'category_id'], 'integer'],
