@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Categories';
+$this->title = 'Категории';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
@@ -18,10 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,13 +27,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Category $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'attribute' => 'id',
+                'label' => 'ID',
+                'headerOptions' => ['width' => '80'],
+            ],
+            [
+                'attribute' => 'title',
+                'label' => 'Название',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return Html::a($data->title, Url::toRoute(['category/update', 'id' => $data->id]));
+                }
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '80'],
+                'template' => '{view} {delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return '<a href="/site/category?id=' . $model->id . '" title="Просмотр категории" target="_blank"
+                    aria-label="Просмотр категории" data-pjax="0"><span class="glyphicon glyphicon-eye-open"></span></a>';
+                    },
+                ],
             ],
         ],
     ]); ?>
