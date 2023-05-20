@@ -41,6 +41,21 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['update', 
                     ['set-category', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
             </td>
         </tr>
+        <tr class="border-bot">
+            <td>Теги</td>
+            <td>
+                <?php if ($model->getTags()->all()): ?>
+                    <?php foreach ($model->getTags()->all() as $tags): ?>
+                        <?= $tags->title ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    Не задано
+                <?php endif; ?>
+            </td>
+            <td>
+                <?= Html::a('Установить теги', ['set-tags', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+            </td>
+        </tr>
         </tbody>
     </table>
 
