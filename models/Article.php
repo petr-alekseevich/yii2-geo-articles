@@ -20,6 +20,7 @@ use Yii;
  * @property string|null $video
  * @property ArticleTag[] $articleTags
  * @property Comment[] $comments
+ * @property Category $category Категория
  */
 class Article extends \yii\db\ActiveRecord
 {
@@ -92,5 +93,23 @@ class Article extends \yii\db\ActiveRecord
     public function getComments()
     {
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
+    }
+
+    /**
+     * @param $category_id
+     * @return true|void
+     */
+    public function saveCategory($category_id)
+    {
+        $category = Category::findOne($category_id);
+        if($category != null){
+            $this->link('category', $category);
+            return true;
+        }
     }
 }
