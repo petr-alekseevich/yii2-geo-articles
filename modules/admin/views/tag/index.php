@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\TagSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Tags';
+$this->title = 'Теги';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tag-index">
@@ -18,10 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Tag', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать тег', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,16 +27,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Tag $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'attribute' => 'id',
+                'label' => 'ID',
+                'headerOptions' => ['width' => '80'],
+            ],
+            [
+                'attribute' => 'title',
+                'label' => 'Название',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return Html::a($data->title, Url::toRoute(['tag/update', 'id' => $data->id]));
+                }
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '80'],
+                'template' => '{view} {delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return '<a href="/site/tag?id=' . $model->id . '" title="Просмотр тега" target="_blank"
+                    aria-label="Просмотр тега" data-pjax="0"><span class="glyphicon glyphicon-eye-open"></span></a>';
+                    },
+                ],
             ],
         ],
     ]); ?>
-
 
 </div>
