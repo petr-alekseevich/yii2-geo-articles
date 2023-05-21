@@ -34,3 +34,10 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+
+/config/db.php
+/config/params.php
+/web/.htaccess
+/yii
+/web/index.php
+/web/uploads

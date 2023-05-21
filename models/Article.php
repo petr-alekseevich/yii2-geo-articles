@@ -131,4 +131,15 @@ class Article extends \yii\db\ActiveRecord
             return true;
         }
     }
+
+    public function saveImage($filename)
+    {
+        $this->image = $filename;
+        $this->save(false);
+    }
+
+    public function getImage()
+    {
+        return ($this->image) ? '/uploads/titleImage/' . $this->image : '/no-image.png';
+    }
 }

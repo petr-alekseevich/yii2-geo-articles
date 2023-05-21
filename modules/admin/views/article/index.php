@@ -48,11 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->formatter->asDate($data->date);
                 }
             ],
-            //'image',
-            //'viewed',
-            //'user_id',
-            //'status',
-            //'category_id',
+            [
+                'format' => 'html',
+                'label' => 'Картинка',
+                'value' => function ($data) {
+                    return Html::img($data->getImage(), ['width' => 200]);
+                }
+            ],
             [
                 'urlCreator' => function ($action, Article $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
@@ -60,10 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',
                 'headerOptions' => ['width' => '80'],
-                'template' => '{view} {delete}',
+                'template' => '{delete}',
             ],
         ],
     ]); ?>
-
-
 </div>

@@ -32,6 +32,16 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['update', 
         </thead>
         <tbody>
         <tr class="border-bot">
+            <td>Заглавная картинка</td>
+            <td>
+                <?= Html::img($model->getImage(), ['width' => 200]) ?>
+            </td>
+            <td>
+                <?= Html::a('Изменить картинку',
+                    ['set-image', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+            </td>
+        </tr>
+        <tr class="border-bot">
             <td>Категория</td>
             <td>
                 <?= $model->category ? $model->category->title : 'Не задано' ?>
