@@ -40,7 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'description:ntext',
             'content:ntext',
-            'date',
+            [
+                'attribute' => 'date',
+                'label' => 'Дата',
+                'headerOptions' => ['width' => '120'],
+                'value' => function ($data) {
+                    return Yii::$app->formatter->asDate($data->date);
+                }
+            ],
             //'image',
             //'viewed',
             //'user_id',
