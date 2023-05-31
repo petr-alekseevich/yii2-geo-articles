@@ -40,4 +40,20 @@ class Category extends \yii\db\ActiveRecord
             'title' => 'Категория',
         ];
     }
+
+    public static function getAll()
+    {
+        return Category::find()->all();
+    }
+
+    public function getArticles()
+    {
+        return $this->hasMany(Article::class, ['category_id' => 'id']);
+    }
+
+    public function getArticlesCount()
+    {
+        return $this->getArticles()->count();
+    }
+
 }

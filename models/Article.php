@@ -142,4 +142,27 @@ class Article extends \yii\db\ActiveRecord
     {
         return ($this->image) ? '/uploads/titleImage/' . $this->image : '/no-image.png';
     }
+
+    public static function randomArticle()
+    {
+        $articles = Article::find()->select('id')->asArray()->all();
+        $randomKey = array_rand(ArrayHelper::getColumn($articles, 'id'));
+
+        return self::findOne($articles[$randomKey]);
+    }
+
+    public static function getPopular()
+    {
+        return Article::find()->orderBy('viewed desc')->limit(3)->all();
+    }
+
+    public static function getRecent()
+    {
+        return Article::find()->orderBy('date desc')->limit(4)->all();
+    }
+
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date);
+    }
 }
