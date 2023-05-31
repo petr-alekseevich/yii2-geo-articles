@@ -1,50 +1,97 @@
 <?php
 
-/** @var yii\web\View $this */
+/* @var $this yii\web\View */
+/* @var $articles Article */
+/* @var $popular Article */
+/* @var $recent Article */
+/* @var $categories Category */
+/* @var $pagination Article */
 
-$this->title = 'My Yii Application';
+use app\models\Article;
+use app\models\Category;
+use yii\helpers\Url;
+use yii\widgets\LinkPager;
+
+$this->title = Yii::$app->params['appName'] . ' блог';
+
 ?>
-<div class="site-index">
-
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
+<style>
+    .decoration a {
+        width: 185px;
+        margin: 10px 6px 10px 0;
+    }
+</style>
+<!--main content start-->
+<div class="main-content">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            <div class="col-md-8">
+                <?php foreach ($articles as $article): ?>
+                    <article class="post">
+                        <div class="post-thumb">
+                            <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]); ?>"><img
+                                        src="<?= $article->getImage(); ?>" alt="<?= $article->title ?>"></a>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                            <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]); ?>"
+                               class="post-thumb-overlay text-center">
+                                <div class="text-uppercase text-center">Читать</div>
+                            </a>
+                        </div>
+                        <div class="post-content">
+                            <header class="entry-header text-center text-uppercase">
+                                <h6>
+                                    <a href="<?= Url::toRoute(['site/category', 'id' => $article->category->id]) ?>">
+                                        <?= $article->category->title; ?></a>
+                                </h6>
 
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                                <h1 class="entry-title">
+                                    <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]); ?>">
+                                        <?= $article->title ?></a>
+                                </h1>
+
+
+                            </header>
+                            <div class="entry-content">
+                                <p><?= $article->description ?>
+                                </p>
+
+                                <div class="btn-continue-reading text-center text-uppercase">
+                                    <a href="<?= Url::toRoute(['site/view', 'id' => $article->id]); ?>"
+                                       class="more-link">Читать статью</a>
+                                </div>
+                            </div>
+
+                            <div class="decoration" style="display: none">
+                                <?php if ($article->getTags()->all()): ?>
+                                    <?php foreach ($article->getTags()->all() as $tag): ?>
+                                        <a href="#" class="btn btn-default"><?= $tag->title ?></a>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="social-share">
+                                <span class="social-share-title pull-left text-capitalize">
+                                    Автор: <?= $article->author->name; ?>, <?= $article->getDate(); ?></span>
+                                <ul class="text-center pull-right">
+                                    <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a>
+                                    </li><?= (int)$article->viewed ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+
+                <?= LinkPager::widget([
+                    'pagination' => $pagination,
+                ]);
+                ?>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p></p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <?= $this->render('/partials/sidebar', [
+                'popular' => $popular,
+                'recent' => $recent,
+                'categories' => $categories
+            ]); ?>
         </div>
-
     </div>
 </div>
+<!-- end main content-->
