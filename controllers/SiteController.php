@@ -7,6 +7,7 @@ use app\models\Category;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -77,6 +78,21 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionView($id)
+    {
+        //dd($id);
+        $article = Article::findOne($id);
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll();
+
+        return $this->render('single', [
+            'article' => $article,
+            'popular' => $popular,
+            'recent' => $recent,
+            'categories' => $categories
+        ]);
+    }
     /**
      * Login action.
      *
@@ -137,5 +153,21 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * @throws HttpException
+     */
+    public function actionLike()
+    {
+        if (!Yii::$app->request->isAjax) {
+            throw new HttpException(404, 'Ошибка перехода не по ajax запросу');
+        }
+
+        $articleId = Yii::$app->request->post('articleId');
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $articleId;
     }
 }

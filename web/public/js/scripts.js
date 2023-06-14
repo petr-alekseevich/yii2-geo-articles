@@ -14,7 +14,6 @@
     }());
 
 
-
     /*=== single blog carousel =====*/
     (function () {
         $('.items').owlCarousel({
@@ -67,8 +66,17 @@
     }());
 
 
-
-
 })(jQuery);
 
-
+$(document).ready(function () {
+    $('.article-like').on('click', function (e) {
+        let articleId = $(this).data('article-id');
+        $(this).toggleClass('active-like');
+        $.post('/site/like', {
+            _csrf: $('meta[name="csrf-token"]').attr('content'),
+            articleId: articleId
+        }).then((data) => {
+            console.log(data)
+        });
+    });
+});
