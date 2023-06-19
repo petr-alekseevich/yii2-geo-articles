@@ -1640,11 +1640,6 @@ p.go-back-home a:hover {
     border-color: #00BFF3;
 }
 
-.article-like {
-    width: 10%;
-    height: 10%;
-}
-
 .article-like.active-like {
-    background-color: #0dcaf0;
+    color: red;
 }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Article;
 use app\models\Category;
+use app\models\Like;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -165,6 +166,12 @@ class SiteController extends Controller
         }
 
         $articleId = Yii::$app->request->post('articleId');
+        $userId = 2;
+        $like = new Like([
+           'article_id'=> $articleId,
+           'user_id'=> $userId
+        ]);
+        $like->save();
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 
