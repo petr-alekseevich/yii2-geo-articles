@@ -87,6 +87,9 @@ class SiteController extends Controller
         $recent = Article::getRecent();
         $categories = Category::getAll();
 
+        $article->viewed += 1;
+        $article->save();
+
         return $this->render('single', [
             'article' => $article,
             'popular' => $popular,

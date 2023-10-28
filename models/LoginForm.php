@@ -48,21 +48,12 @@ class LoginForm extends Model
     }
 
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param $password
+     * @return bool
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword($password): bool
     {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect email or password.');
-            }
-        }
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**

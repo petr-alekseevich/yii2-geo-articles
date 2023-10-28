@@ -17,6 +17,7 @@ use yii\web\IdentityInterface;
  * @property int|null $isAdmin
  * @property string|null $photo
  *
+ * @property-read mixed $authKey
  * @property Comment[] $comments
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -94,4 +95,35 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return User::find()->where(['email' => $email])->one();
     }
+
+    public function create()
+    {
+        return $this->save(false);
+    }
+
+   public function validatePassword($password)
+    {
+        return $this->password == $password;
+    }
+    /**
+     * @param $password
+     * @return bool
+     */
+//    public function validatePassword($password): bool
+//    {
+//        return Yii::$app->security->validatePassword($password, $this->password);
+//    }
+
+    /**
+     * Logs in a user using the provided email and password.
+     * @return bool whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this, $this->rememberMe ? 3600*24*30 : 0);
+        }
+        return false;
+    }
+
 }
