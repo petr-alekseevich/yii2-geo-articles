@@ -105,14 +105,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->password == $password;
     }
-    /**
-     * @param $password
-     * @return bool
-     */
-//    public function validatePassword($password): bool
-//    {
-//        return Yii::$app->security->validatePassword($password, $this->password);
-//    }
 
     /**
      * Logs in a user using the provided email and password.
@@ -126,4 +118,25 @@ class User extends ActiveRecord implements IdentityInterface
         return false;
     }
 
+    /**
+     * @param $uid
+     * @param $name
+     * @param $photo
+     * @return bool
+     */
+    public function saveFromVk($uid, $name, $photo): bool
+    {
+        $user = User::findOne($uid);
+
+        if ($user) {
+            return Yii::$app->user->login($user);
+        }
+
+        $this->id = $uid;
+        $this->name = $name;
+        $this->photo = $photo;
+        $this->create();
+
+        return Yii::$app->user->login($this);
+    }
 }
