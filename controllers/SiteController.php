@@ -45,6 +45,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function actions()
     {
         return [
@@ -168,6 +169,14 @@ class SiteController extends Controller
             throw new HttpException(404, 'Ошибка перехода не по ajax запросу');
         }
 
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->user->isGuest) {
+            return [
+                'error'=> 'not authenticated'
+            ];
+        }
+
         $articleId = Yii::$app->request->post('articleId');
         $userId = 2;
         $like = new Like([
@@ -175,8 +184,6 @@ class SiteController extends Controller
            'user_id'=> $userId
         ]);
         $like->save();
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
 
         return $articleId;
     }
