@@ -4,12 +4,15 @@
 /* @var $popular Article */
 /* @var $recent Article */
 /* @var $categories Category */
+
 /* @var $comments Comment[] */
+/* @var $commentForm CommentForm */
 
 
 use app\models\Article;
 use app\models\Category;
 use app\models\Comment;
+use app\models\CommentForm;
 use yii\helpers\Url;
 
 $this->title = Yii::$app->params['appName'] . ' блог';
@@ -66,7 +69,11 @@ $this->title = Yii::$app->params['appName'] . ' блог';
                         </div>
                     </div>
                 </article>
-
+                <?= $this->render('/partials/comment', [
+                    'article' => $article,
+                    'comments' => $comments,
+                    'commentForm' => $commentForm
+                ]) ?>
             </div>
 
             <?= $this->render('/partials/sidebar', [

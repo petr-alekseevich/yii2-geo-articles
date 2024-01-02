@@ -77,6 +77,9 @@ $(document).ready(function () {
             articleId: articleId
         }).then((data) => {
             console.log(data)
+            if (data.error && data.error === 'not authenticated') {
+                location.href = '/auth/login';
+            }
         });
     });
 });
